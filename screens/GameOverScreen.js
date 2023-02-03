@@ -1,27 +1,54 @@
-import { Text, View, StyleSheet, Image } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  useWindowDimensions,
+  ScrollView,
+} from "react-native";
 import Color from "../constants/color";
 import Title from "../components/ui/Title";
 import PrimaryButton from "../components/ui/PrimaryButton";
 
 function GameOverScreen({ userNumber, guessRound, onStartNewGame }) {
+  const { width, height } = useWindowDimensions();
+
+  let imageSize = 300;
+
+  if (width < 300) {
+    imageSize = 150;
+  }
+
+  if (height < 500) {
+    imageSize = 80;
+  }
+
+  const imageContainerExtend = {
+    width: imageSize,
+    height: imageSize,
+    borderRadius: imageSize / 2,
+  };
+
   return (
-    <View style={styles.rootContainer}>
-      <Title>Game Over</Title>
-      <View style={styles.imageContainer}>
-        <Image
-          source={require("../assets/images/success.png")}
-          style={styles.image}
-        />
+    <ScrollView>
+      <View style={styles.rootContainer}>
+        <Title>Game Over</Title>
+        <View style={[styles.imageContainer, imageContainerExtend]}>
+          <Image
+            source={require("../assets/images/success.png")}
+            style={styles.image}
+          />
+        </View>
+
+        <Text style={styles.summaryText}>
+          Your phone needed <Text style={styles.highlight}>{guessRound}</Text>{" "}
+          rounds to guess the number{" "}
+          <Text style={styles.highlight}>{userNumber}</Text>.
+        </Text>
+
+        <PrimaryButton onPress={onStartNewGame}>Start New Game</PrimaryButton>
       </View>
-
-      <Text style={styles.summaryText}>
-        Your phone needed <Text style={styles.highlight}>{guessRound}</Text>{" "}
-        rounds to guess the number{" "}
-        <Text style={styles.highlight}>{userNumber}</Text>.
-      </Text>
-
-      <PrimaryButton onPress={onStartNewGame}>Start New Game</PrimaryButton>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -35,9 +62,9 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   imageContainer: {
-    width: 300,
-    height: 300,
-    borderRadius: 200,
+    // width: 300,
+    // height: 300,
+    // borderRadius: 200,
     borderWidth: 3,
     borderColor: Color.primary700,
     overflow: "hidden",
