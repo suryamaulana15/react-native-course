@@ -1,7 +1,7 @@
 import { Text, View, StyleSheet, FlatList } from "react-native";
 
 import { CATEGORIES, MEALS } from "../data/dummy-data";
-import MealItem from "../components/MealItem";
+import MealItem from "../components/MealsList/MealItem";
 import { useLayoutEffect } from "react";
 
 function MealsOverviewScreen({ route, navigation }) {
